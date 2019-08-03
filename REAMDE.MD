@@ -2,20 +2,42 @@
 
 Шаблон для начала express-проекта с pug/scss.
 
-## css/scss
+## Быстрый старт
 
-Express не компилирует scss-файлы, а использует уже скомпилированные css: это позволяет избавиться от проблем с путями, которые возникают при использовании, например, express-sass-middleware.
+Проще всего с [degit](https://github.com/Rich-Harris/degit) делать копию:
 
-За изменением scss-файлов смотрит chokidar и автоматически при сохранении scss-файлов запускает компилирование css.
+```shell
+npx degit boleeluchshiy/express-simple <projectName>
+```
 
-### postcss
+...перейти в папку...
 
-Добавлен autoprefixer.
+```shell
+cd <projectName>
+```
 
-## Запуск сервера
+...установить зависимости...
+
+```shell
+npm i
+```
+
+...запустить hot-компиляцию css...
+
+```shell
+npm run watch-css
+```
+
+...во 2-м окне терминала запустить сервер
 
 ```shell
 npm run server
 ```
 
-(За изменением файлов смотрит nodemon)
+## TODO
+
+Подмести scss.
+
+## css/scss
+
+css компилируется из scss отдельно (чтобы избавиться от проблем с путями, которые возникают при использовании express-sass-middleware, например)

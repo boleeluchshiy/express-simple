@@ -1,34 +1,48 @@
-const config = require('config')
+//    db
+const connectDB = require('./config/connectDB')()
 
-const connectDB = require('./config/db')
-connectDB()
-
+const path = require('path')
+const config = require('./config/default')
 const express = require('express')
 const server = express()
-// const path = require('path')
 
-// middleware
-server.use(express.json({ extended: false }))
+//    Middleware functions
+server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 
-// engines
-server.set('view engine', 'pug')
+// session
+const session = require('express-session')
+server.use(session(config.session))
+
+// flash
+const flash = require('connect-flash')
+server.use(flash())
+
+// root
+// const ROOT = config.ROOT || __dirname
 
 // static
-server.use(express.static('public'))
+// const STATIC_DIR = config.STATIC_DIR
+//    ? path.join(ROOT, config.STATIC_DIR)
+//    : path.join(ROOT, 'public')
+// server.use(express.static(STATIC_DIR))
+server.use(express.static(path.join(__dirname, 'public')))
 
-//    routes
-server.get('/', (req, res) => {
-   return res.render('index', {
-      title: 'Node simple',
-   })
-})
-// api
+//    Template engine
+server.set('view engine', 'pug')
+//Т.к. перенесли globals в /mw
+config.VIEWS_DIR = path.join(__dirname, 'views')
 
-const PORT = process.env.PORT || config.get('PORT')
-server.listen(PORT, () => {
-   return console.log(
-      '\n',
-      `🙋  > Сервер запущен: http://localhost:${PORT}`,
-   )
-})
+//    Globals
+server.use(require('./mw/globals'))
+
+//    expressServer
+const PORT = process.env.PORT || config.PORT
+const expressServer = server.listen(PORT, () =>
+   console.log(`\n🙋  > http://localhost:${PORT}/`),
+)
+
+//    socket.io
+
+//    urls
+server.use(require('./router'))

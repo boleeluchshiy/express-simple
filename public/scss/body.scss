@@ -1,0 +1,20 @@
+.body {
+	.header {
+		display: flex;
+		font-size: 0.6rem;
+		align-items: baseline;
+
+		>* {
+			margin-right: 2em;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+
+		.h1 {
+			font-size: .8rem;
+			font-weight: normal;
+		}
+	}
+}

@@ -1,0 +1,10 @@
+include /_mixins/schrodingerLink
+
+header.header
+   .logo.nav-group
+      h1.h1
+         +schrodingerLink('/', 'Проект')
+
+   ul.ul.nav-group
+      li.li
+         +schrodingerLink('/sample-page', `Пример-страница`)
